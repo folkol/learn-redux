@@ -12,13 +12,9 @@ function postComments(state = [], action) {
 					user: action.author,
 					text: action.comment
 				}
-			]
+			];
 		case 'REMOVE_COMMENT':
-			return [
-				...state.slice(0, action.i),
-				...state.slice(action.i + 1)
-			]
-			console.log('Removing comment.');
+			return state.filter((e, i) => i !== action.i);
 		default:
 			return state;
 	}
@@ -27,9 +23,9 @@ function postComments(state = [], action) {
 function comments(state = [], action) {
 	if(typeof action.postId !== 'undefined') {
 		return {
-				...state,
-				[action.postId]: postComments(state[action.postId], action)
-			};
+			...state,
+			[action.postId]: postComments(state[action.postId], action)
+		};
 	}
 	return state;
 }
