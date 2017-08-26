@@ -14,6 +14,11 @@ function postComments(state = [], action) {
 				}
 			]
 		case 'REMOVE_COMMENT':
+			return [
+				...state.slice(0, action.i),
+				...state.slice(action.i + 1)
+			]
+			console.log('Removing comment.');
 		default:
 			return state;
 	}
@@ -26,7 +31,6 @@ function comments(state = [], action) {
 				[action.postId]: postComments(state[action.postId], action)
 			};
 	}
-	console.log(typeof(state), state, action);
 	return state;
 }
 
