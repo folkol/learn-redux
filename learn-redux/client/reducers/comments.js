@@ -3,25 +3,31 @@
 // 2. copy of the current state
 
 
-function comments(state = [], action) {
-	console.log(typeof(state), state, action);
+function postComments(state = [], action) {
 	switch(action.type) {
 		case 'ADD_COMMENT':
-			const newState = {
+			return [
 				...state,
-				[action['postId']]: [
-					...state[action.postId],
-					{
-						user: action.author,
-						text: action.comment
-					}
-				]
-			};
-			console.log(newState);
-			return newState;
+				{
+					user: action.author,
+					text: action.comment
+				}
+			]
+		case 'REMOVE_COMMENT':
 		default:
 			return state;
 	}
+}
+
+function comments(state = [], action) {
+	if(typeof action.postId !== 'undefined') {
+		return {
+				...state,
+				[action.postId]: postComments(state[action.postId], action)
+			};
+	}
+	console.log(typeof(state), state, action);
+	return state;
 }
 
 export default comments;
