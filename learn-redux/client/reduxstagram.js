@@ -11,10 +11,21 @@ import { Provider } from 'react-redux';
 import store, { history } from './store';
 
 import Raven from 'raven-js';
-import {sentry_url} from './data/config';
-Raven.config(sentry_url).install();
+import { sentry_url, logException } from './data/config';
 
-console.log(window.adf.nope);
+Raven.config(sentry_url, {
+	tags: {
+		git_commit: 'asdfasf3423',
+		userLevel: 'editor'
+	}
+}).install();
+
+// logException(new Error('Oh noes :('), {
+	// email: 'mattias4@kth.se'
+// });
+// console.log(window.adf.nope);
+// Raven.captureMessage('Something bad happened');
+// Raven.showReportDialog();
 
 const router = (
 	<Provider store={store}>
