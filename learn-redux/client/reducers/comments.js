@@ -4,7 +4,24 @@
 
 
 function comments(state = [], action) {
-	return state;
+	console.log(typeof(state), state, action);
+	switch(action.type) {
+		case 'ADD_COMMENT':
+			const newState = {
+				...state,
+				[action['postId']]: [
+					...state[action.postId],
+					{
+						user: action.author,
+						text: action.comment
+					}
+				]
+			};
+			console.log(newState);
+			return newState;
+		default:
+			return state;
+	}
 }
 
 export default comments;
